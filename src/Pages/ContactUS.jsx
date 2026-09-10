@@ -14,6 +14,7 @@ const initForm = {
 
 const ContactUSPage = () => {
   const [form, setForm] = useState(initForm);
+  const [isSending, setIsSending] = useState(false);
 
   const handleChange = (e) => {
     setForm((prev) => {
@@ -23,6 +24,7 @@ const ContactUSPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSending(true);
 
     const response = axios.post(
       "https://shopino.iran.liara.run/v1/contact-us",
@@ -32,10 +34,14 @@ const ContactUSPage = () => {
     toast.promise(response, {
       loading: "در حال ارسال پیام",
       success: () => {
+        setIsSending(false);
         setForm(initForm);
         return "درخواست شما با موفقیت ارسال شد ";
       },
-      error: (error) => error.message || "ارسال پیام با شکست مواجه شد",
+      error: (error) => {
+        setIsSending(false);
+        return error.message || "ارسال پیام با شکست مواجه شد";
+      },
     });
   };
 
@@ -106,9 +112,10 @@ const ContactUSPage = () => {
 
             <button
               onClick={handleSubmit}
-              className=" bg-linear-to-t from-blue-600 px-4 py-2.5 rounded-md text-white cursor-pointer hover:opacity-90 focus-within:ring-4 ring-sky-300/50 ring-offset-2 duration-150 to-blue-400 max-w-max "
+              className={`${isSending ? "opacity-50! cursor-not-allowed" : null} bg-linear-to-t from-blue-600 px-4 py-2.5 rounded-md text-white cursor-pointer hover:opacity-90 focus-within:ring-4 ring-sky-300/50 ring-offset-2 duration-150 to-blue-400 max-w-max `}
+              disabled={isSending}
             >
-              ثبت و ارسال
+              {isSending ? "درحال ارسال پیام..." : "ثبت و ارسال"}
             </button>
           </div>
         </div>
