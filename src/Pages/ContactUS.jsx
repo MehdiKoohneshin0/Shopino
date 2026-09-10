@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { contactUsSchema } from "../validators/contactUs";
+import { validate } from "../validators";
 
 const initForm = {
   name: "",
@@ -27,11 +28,10 @@ const ContactUSPage = () => {
     e.preventDefault();
     setIsSending(true);
 
-    const result = contactUsSchema.safeParse(form);
-    console.log(result);
-
-    return;
-
+    if (!validate(contactUsSchema, form)) {
+      setIsSending(false);
+      return;
+    }
     const response = axios.post(
       "https://shopino.iran.liara.run/v1/contact-us",
       form,
