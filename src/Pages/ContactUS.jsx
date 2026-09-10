@@ -4,6 +4,7 @@ import InputField from "../Components/Templates/ContactUS/InputField";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
+import { contactUsSchema } from "../validators/contactUs";
 
 const initForm = {
   name: "",
@@ -25,6 +26,11 @@ const ContactUSPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSending(true);
+
+    const result = contactUsSchema.safeParse(form);
+    console.log(result);
+
+    return;
 
     const response = axios.post(
       "https://shopino.iran.liara.run/v1/contact-us",
