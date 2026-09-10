@@ -3,6 +3,8 @@ const InputField = ({
   onChange,
   fullWidth,
   placeholder,
+  value,
+  name,
   type = "text",
 }) => {
   const cardClassName = "*:block w-full space-y-2.5 ".concat(
@@ -20,6 +22,8 @@ const InputField = ({
       </label>
       <input
         type={type}
+        value={value}
+        name={name}
         placeholder={
           placeholder ? placeholder : "لطفا این فیلد را تکمیل بفرمایید."
         }
