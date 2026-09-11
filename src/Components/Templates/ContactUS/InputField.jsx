@@ -14,12 +14,14 @@ const InputField = ({
 
   return (
     <div className={cardClassName}>
-      <label
-        htmlFor={uniqueID}
-        className="text-xs select-none text-neutral-500"
-      >
-        {label}:
-      </label>
+      {label && (
+        <label
+          htmlFor={uniqueID}
+          className="text-xs select-none text-neutral-500"
+        >
+          {label}:
+        </label>
+      )}
       <input
         type={type}
         value={value}
@@ -29,7 +31,7 @@ const InputField = ({
         }
         id={uniqueID}
         onChange={onChange}
-        className="contact-input-field"
+        className="contact-input-field w-full"
       />
     </div>
   );
