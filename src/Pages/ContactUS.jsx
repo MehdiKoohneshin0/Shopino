@@ -1,11 +1,8 @@
 import { Link } from "react-router";
+
 import SectionTitle from "../Components/Common/SectionTitle";
 import InputField from "../Components/Templates/ContactUS/InputField";
-import { useState } from "react";
-import axios from "axios";
-import { toast } from "sonner";
-import { contactUsSchema } from "../validators/contactUs";
-import { validate } from "../validators";
+import useContactUs from "../lib/Hooks/useContactUs";
 
 const initForm = {
   name: "",
@@ -15,42 +12,8 @@ const initForm = {
 };
 
 const ContactUSPage = () => {
-  const [form, setForm] = useState(initForm);
-  const [isSending, setIsSending] = useState(false);
-
-  const handleChange = (e) => {
-    setForm((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSending(true);
-
-    if (!validate(contactUsSchema, form)) {
-      setIsSending(false);
-      return;
-    }
-    const response = axios.post(
-      "https://shopino.iran.liara.run/v1/contact-us",
-      form,
-    );
-
-    toast.promise(response, {
-      loading: "در حال ارسال پیام",
-      success: () => {
-        setIsSending(false);
-        setForm(initForm);
-        return "درخواست شما با موفقیت ارسال شد ";
-      },
-      error: (error) => {
-        setIsSending(false);
-        return error.message || "ارسال پیام با شکست مواجه شد";
-      },
-    });
-  };
-
+  const { form, isSending, handleChange, handleSubmit } =
+    useContactUs(initForm);
   return (
     <main className="my-20 container" id="contact-us">
       <SectionTitle
