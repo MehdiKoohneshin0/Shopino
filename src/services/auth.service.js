@@ -1,13 +1,23 @@
-import axios from "axios";
+import api from ".";
 
-export const sendOtp = (phone) => {
-  return axios.post("https://shopino.iran.liara.run/v1/auth/send", { phone });
+export const sendOtp = async (phone) => {
+  const { data } = await api.post("/auth/send", { phone });
+
+  return data;
 };
 
-export const verifyOtp = (phone, otp) => {
-  return axios.post("https://shopino.iran.liara.run/v1/auth/verify", {
+export const veriftOtp = async (phone, otp) => {
+  const { data } = await api.post("/auth/verify", {
     phone,
     otp,
     isSeller: false,
   });
+
+  return data;
+};
+
+export const getMe = async () => {
+  const { data } = await api.get("auth/me");
+
+  return data;
 };

@@ -7,7 +7,13 @@ const initForm = {
 };
 
 const AuthPage = () => {
-  const { form, isSentOtp, handleChange, handleSubmit } = useAuth(initForm);
+  const {
+    form: { phone, otp },
+    isSentOtp,
+    isLoading,
+    handleFormChange,
+    handleSubmit,
+  } = useAuth(initForm);
 
   return (
     <div className="flex-center flex-col gap-6 *:w-full">
@@ -16,22 +22,22 @@ const AuthPage = () => {
         <p className="text-xs text-neutral-500 font-bold">ثبت نام یا ورود</p>
       </span>
       <form className="grid grid-cols-2 gap-5 " onSubmit={handleSubmit}>
-        {!isSentOtp ? (
+        {isSentOtp ? (
           <InputField
-            value={form.phone}
-            onChange={handleChange}
-            fullWidth
-            placeholder={"09123456789 "}
-            name={"phone"}
-            label={"شماره موبایل خود را وارد کنید"}
-          />
-        ) : (
-          <InputField
-            value={form.otp}
-            onChange={handleChange}
             fullWidth
             placeholder={"کد تایید"}
             name={"otp"}
+            value={otp}
+            onChange={handleFormChange}
+          />
+        ) : (
+          <InputField
+            fullWidth
+            placeholder={"09123456789 "}
+            name={"phone"}
+            value={phone}
+            onChange={handleFormChange}
+            label={"شماره موبایل خود را وارد کنید"}
           />
         )}
 

@@ -3,9 +3,11 @@ import Footer from "../Common/Footer";
 import Header from "../Common/Header";
 import { Toaster } from "sonner";
 
+import AuthContextProvider from "./../../contexts/authContext";
+
 const AppLayout = () => {
   return (
-    <>
+    <AuthContextProvider>
       <Toaster
         position="top-right"
         toastOptions={{
@@ -16,7 +18,7 @@ const AppLayout = () => {
       <Header />
       <Outlet />
       <Footer />
-    </>
+    </AuthContextProvider>
   );
 };
 
